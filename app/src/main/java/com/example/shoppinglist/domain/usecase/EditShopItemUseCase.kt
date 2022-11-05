@@ -1,4 +1,7 @@
-package com.example.shoppinglist.domain
+package com.example.shoppinglist.domain.usecase
+
+import com.example.shoppinglist.domain.ShopItem
+import com.example.shoppinglist.domain.ShopListRepository
 
 class EditShopItemUseCase(private val shopListRepository: ShopListRepository) {
 

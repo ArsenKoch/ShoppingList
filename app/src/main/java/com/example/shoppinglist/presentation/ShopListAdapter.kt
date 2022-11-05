@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
 
-class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
+class ShopListAdapter :RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
     var shopList = listOf<ShopItem>()
         @SuppressLint("NotifyDataSetChanged")
@@ -18,6 +19,9 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
             field = value
             notifyDataSetChanged()
         }
+
+    var onShopItemLongClickListeners: ((ShopItem) -> Unit)? = null
+    var onShopItemClickListeners: ((ShopItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
         val layout = when (viewType) {
@@ -38,8 +42,16 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
         viewHolder.itemView.setOnLongClickListener {
+            onShopItemLongClickListeners?.invoke(shopItem)
             true
         }
+        viewHolder.itemView.setOnClickListener {
+            onShopItemClickListeners?.invoke(shopItem)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return shopList.size
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -63,8 +75,14 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         )
     }
 
-    override fun getItemCount(): Int {
-        return shopList.size
+    interface onShopItemLongClickListener {
+
+        fun onShopItemLongClick(shopItem: ShopItem)
+    }
+
+    interface onShopItemClickListener {
+
+        fun onShopItemClick(shopItem: ShopItem)
     }
 
     class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
