@@ -20,8 +20,13 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
+        val layout = when (viewType) {
+            VIEW_TYPE_ENABLED -> R.layout.item_shop_enabled
+            VIEW_TYPE_DISABLED -> R.layout.item_shop_disabled
+            else -> throw RuntimeException("Unknown viewType: $viewType !")
+        }
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_shop_disabled,
+            layout,
             parent,
             false
         )
@@ -30,25 +35,19 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
     override fun onBindViewHolder(viewHolder: ShopItemViewHolder, position: Int) {
         val shopItem = shopList[position]
-        val status = if (shopItem.enabled) {
-            "Active"
-        } else {
-            "Not Active"
-        }
-        viewHolder.tvName.text = "${shopItem.name} $status"
+        viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
         viewHolder.itemView.setOnLongClickListener {
             true
         }
-        if (shopItem.enabled) {
-            viewHolder.tvName.setTextColor(
-                ContextCompat.getColor(
-                    viewHolder.itemView.context,
-                    android.R.color.holo_orange_dark
-                )
-            )
-            viewHolder.tvName.text = "${shopItem.name} $status"
-            viewHolder.tvCount.text = shopItem.count.toString()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val item = shopList[position]
+        return if (item.enabled) {
+            VIEW_TYPE_ENABLED
+        } else {
+            VIEW_TYPE_DISABLED
         }
     }
 
@@ -72,4 +71,15 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         val tvName: TextView = itemView.findViewById(R.id.tv_name)
         val tvCount: TextView = itemView.findViewById(R.id.tv_count)
     }
+
+
+    companion object {
+
+        const val VIEW_TYPE_ENABLED = 100
+        const val VIEW_TYPE_DISABLED = 101
+
+        const val MAX_POOL_SIZE = 15
+    }
 }
+
+
