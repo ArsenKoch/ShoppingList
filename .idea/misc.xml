@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4525" />
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/drawable/ic_add.xml" value="0.4525" />
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/drawable/ic_add__background.xml" value="0.4525" />
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/drawable/ic_add__foreground.xml" value="0.4525" />
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4525" />
         <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.5546875" />
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/layout/item_shop_disabled.xml" value="0.5546875" />
+        <entry key="..\:/Users/fapah/AndroidStudioProjects/ShoppingList/app/src/main/res/layout/item_shop_enabled.xml" value="0.5546875" />
       </map>
     </option>
   </component>
