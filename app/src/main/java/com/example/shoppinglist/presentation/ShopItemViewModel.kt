@@ -57,15 +57,11 @@ class ShopItemViewModel : ViewModel() {
         val count = parseCount(inputCount)
         val validateInput = validateInput(name, count)
         if (validateInput) {
-//            val shopItem = ShopItem(name, count, true)
-//            editShopItemUseCase.editShopItem(shopItem)
-            _shopItem.value?.let {
-                val item = it.copy(name = name, count = count)
-                editShopItemUseCase.editShopItem(item)
-                finishWork()
+            val shopItem = ShopItem(name, count, true)
+            editShopItemUseCase.editShopItem(shopItem)
             }
         }
-    }
+
 
     private fun parseName(inputName: String?): String {
         return inputName?.trim() ?: ""
