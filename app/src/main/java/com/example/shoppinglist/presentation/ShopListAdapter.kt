@@ -8,8 +8,8 @@ import com.example.shoppinglist.domain.ShopItem
 
 class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCallback()) {
 
-    var onShopItemLongClickListeners: ((ShopItem) -> Unit)? = null
-    var onShopItemClickListeners: ((ShopItem) -> Unit)? = null
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
         val layout = when (viewType) {
@@ -30,11 +30,11 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
         viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
         viewHolder.itemView.setOnLongClickListener {
-            onShopItemLongClickListeners?.invoke(shopItem)
+            onShopItemLongClickListener?.invoke(shopItem)
             true
         }
         viewHolder.itemView.setOnClickListener {
-            onShopItemClickListeners?.invoke(shopItem)
+            onShopItemClickListener?.invoke(shopItem)
         }
     }
 

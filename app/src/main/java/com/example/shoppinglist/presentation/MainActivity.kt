@@ -64,13 +64,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickListener() {
-        adapter.onShopItemClickListeners = {
+        adapter.onShopItemClickListener = {
             Log.d("MainActivityTest", "DATA: $it ")
         }
     }
 
     private fun setupLongClickListener() {
-        adapter.onShopItemLongClickListeners = {
+        adapter.onShopItemLongClickListener = {
             viewModel.changeEnableState(it)
         }
     }
