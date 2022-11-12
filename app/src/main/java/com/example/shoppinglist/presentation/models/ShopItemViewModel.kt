@@ -1,4 +1,4 @@
-package com.example.shoppinglist.presentation
+package com.example.shoppinglist.presentation.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -44,23 +44,25 @@ class ShopItemViewModel : ViewModel() {
         val count = parseCount(inputCount)
         val validateInput = validateInput(name, count)
         if (validateInput) {
-            _shopItem.value?.let {
-                val item = it.copy(name = name, count = count)
-                addShopItemUseCase.addShopItem(item)
-                finishWork()
-            }
+            val shopItem = ShopItem(name, count, true)
+            addShopItemUseCase.addShopItem(shopItem)
+            finishWork()
         }
     }
+
 
     fun editShopItem(inputName: String?, inputCount: String?) {
         val name = parseName(inputName)
         val count = parseCount(inputCount)
         val validateInput = validateInput(name, count)
         if (validateInput) {
-            val shopItem = ShopItem(name, count, true)
-            editShopItemUseCase.editShopItem(shopItem)
+            _shopItem.value?.let {
+                val item = it.copy(name = name, count = count)
+                editShopItemUseCase.editShopItem(item)
+                finishWork()
             }
         }
+    }
 
 
     private fun parseName(inputName: String?): String {
@@ -88,11 +90,11 @@ class ShopItemViewModel : ViewModel() {
         return result
     }
 
-    private fun resetErrorInputName() {
+    fun resetErrorInputName() {
         _errorInputName.value = false
     }
 
-    private fun resetErrorInputCount() {
+    fun resetErrorInputCount() {
         _errorInputCount.value = false
     }
 
