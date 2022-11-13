@@ -46,9 +46,7 @@ class ShopItemFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
         addTextChangeListeners()
-        if (savedInstanceState == null) {
-            launchRightMode()
-        }
+        launchRightMode()
         observeViewModel()
     }
 
