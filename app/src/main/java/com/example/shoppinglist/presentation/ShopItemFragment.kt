@@ -30,7 +30,7 @@ class ShopItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        parseParams()
+        parseIntent()
     }
 
     override fun onCreateView(
@@ -46,7 +46,9 @@ class ShopItemFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
         addTextChangeListeners()
-        launchRightMode()
+        if (savedInstanceState == null) {
+            launchRightMode()
+        }
         observeViewModel()
     }
 
@@ -132,7 +134,7 @@ class ShopItemFragment : Fragment() {
         }
     }
 
-    private fun parseParams() {
+    private fun parseIntent() {
         val args = requireArguments()
         if (!args.containsKey(SCREEN_MODE)) {
             throw RuntimeException("Param screen is absent")
