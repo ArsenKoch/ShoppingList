@@ -119,26 +119,26 @@ class ShopItemActivity : AppCompatActivity() {
 //    }
 //
     private fun parseIntent() {
-        if (!intent.hasExtra(EXTRA_SCREEN_MODE)) {
+        if (!intent.hasExtra(SCREEN_MODE)) {
             throw RuntimeException("Param screen mode is absent")
         }
-        val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)
+        val mode = intent.getStringExtra(SCREEN_MODE)
         if (mode != MODE_ADD && mode != MODE_EDIT) {
             throw RuntimeException("Unknown screen mode $mode")
         }
         screenMode = mode
         if (screenMode == MODE_EDIT) {
-            if (!intent.hasExtra(EXTRA_SHOP_ITEM_ID)) {
+            if (!intent.hasExtra(SHOP_ITEM_ID)) {
                 throw RuntimeException("Param screen mode is absent")
             }
-            shopItemId = intent.getIntExtra(EXTRA_SHOP_ITEM_ID, ShopItem.UNDEFINED_ID)
+            shopItemId = intent.getIntExtra(SHOP_ITEM_ID, ShopItem.UNDEFINED_ID)
         }
     }
 
     companion object {
 
-        private const val EXTRA_SCREEN_MODE = "extra_screen_mode"
-        private const val EXTRA_SHOP_ITEM_ID = "extra_shop_item_id"
+        private const val SCREEN_MODE = "extra_screen_mode"
+        private const val SHOP_ITEM_ID = "extra_shop_item_id"
         private const val MODE_EDIT = "mode_edit"
         private const val MODE_ADD = "mode_add"
         private const val MODE_UNKNOWN = ""
@@ -146,14 +146,14 @@ class ShopItemActivity : AppCompatActivity() {
 
     fun newIntentAddItem(context: Context): Intent {
         val intent = Intent(context, ShopItemActivity::class.java)
-        intent.putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
+        intent.putExtra(SCREEN_MODE, MODE_ADD)
         return intent
     }
 
     fun newIntentEditItem(context: Context, shopItemId: Int): Intent {
         val intent = Intent(context, ShopItemActivity::class.java)
-        intent.putExtra(EXTRA_SCREEN_MODE, MODE_EDIT)
-        intent.putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
+        intent.putExtra(SCREEN_MODE, MODE_EDIT)
+        intent.putExtra(SHOP_ITEM_ID, shopItemId)
         return intent
     }
 }
