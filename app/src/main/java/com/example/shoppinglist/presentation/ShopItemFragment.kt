@@ -21,6 +21,7 @@ class ShopItemFragment : Fragment() {
     private lateinit var viewModel: ShopItemViewModel
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
+
     private lateinit var tilName: TextInputLayout
     private lateinit var tilCount: TextInputLayout
     private lateinit var etName: EditText
@@ -35,7 +36,7 @@ class ShopItemFragment : Fragment() {
         if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
         } else {
-            throw RuntimeException("Activity must implement onEditingFinishedListener")
+            throw RuntimeException("Activity must be implement OnEditingFinishedListener")
         }
     }
 
@@ -105,7 +106,7 @@ class ShopItemFragment : Fragment() {
             tilCount.error = message
         }
         viewModel.turnOffScreen.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
         }
     }
 
