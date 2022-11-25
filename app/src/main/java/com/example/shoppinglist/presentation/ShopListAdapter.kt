@@ -2,8 +2,12 @@ package com.example.shoppinglist.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import com.example.shoppinglist.R
+import com.example.shoppinglist.databinding.ItemShopDisabledBinding
+import com.example.shoppinglist.databinding.ItemShopEnabledBinding
 import com.example.shoppinglist.domain.ShopItem
 
 class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCallback()) {
@@ -17,43 +21,53 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
             VIEW_TYPE_DISABLED -> R.layout.item_shop_disabled
             else -> throw RuntimeException("Unknown viewType: $viewType !")
         }
-        val view = LayoutInflater.from(parent.context).inflate(
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(parent.context),
             layout,
             parent,
             false
         )
-        return ShopItemViewHolder(view)
+        return ShopItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: ShopItemViewHolder, position: Int) {
         val shopItem = getItem(position)
-        viewHolder.tvName.text = shopItem.name
-        viewHolder.tvCount.text = shopItem.count.toString()
-        viewHolder.itemView.setOnLongClickListener {
+        val binding = viewHolder.binding
+        binding.root.setOnLongClickListener {
             onShopItemLongClickListener?.invoke(shopItem)
             true
         }
-        viewHolder.itemView.setOnClickListener {
+        binding.root.setOnClickListener {
             onShopItemClickListener?.invoke(shopItem)
         }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        val item = getItem(position)
-        return if (item.enabled) {
-            VIEW_TYPE_ENABLED
-        } else {
-            VIEW_TYPE_DISABLED
+        when (binding) {
+            is ItemShopEnabledBinding -> {
+                binding.tvName.text = shopItem.name
+                binding.tvCount.text = shopItem.count.toString()
+            }
+            is ItemShopDisabledBinding -> {
+                binding.tvName.text = shopItem.name
+                binding.tvCount.text = shopItem.count.toString()
+            }
         }
     }
 
-    companion object {
+        override fun getItemViewType(position: Int): Int {
+            val item = getItem(position)
+            return if (item.enabled) {
+                VIEW_TYPE_ENABLED
+            } else {
+                VIEW_TYPE_DISABLED
+            }
+        }
 
-        const val VIEW_TYPE_ENABLED = 100
-        const val VIEW_TYPE_DISABLED = 101
+        companion object {
 
-        const val MAX_POOL_SIZE = 15
+            const val VIEW_TYPE_ENABLED = 100
+            const val VIEW_TYPE_DISABLED = 101
+
+            const val MAX_POOL_SIZE = 15
+        }
     }
-}
 
 
