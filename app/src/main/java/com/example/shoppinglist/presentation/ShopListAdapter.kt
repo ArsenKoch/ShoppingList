@@ -52,22 +52,20 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
         }
     }
 
-        override fun getItemViewType(position: Int): Int {
-            val item = getItem(position)
-            return if (item.enabled) {
-                VIEW_TYPE_ENABLED
-            } else {
-                VIEW_TYPE_DISABLED
-            }
-        }
-
-        companion object {
-
-            const val VIEW_TYPE_ENABLED = 100
-            const val VIEW_TYPE_DISABLED = 101
-
-            const val MAX_POOL_SIZE = 15
+    override fun getItemViewType(position: Int): Int {
+        val item = getItem(position)
+        return if (item.enabled) {
+            VIEW_TYPE_ENABLED
+        } else {
+            VIEW_TYPE_DISABLED
         }
     }
 
+    companion object {
 
+        const val VIEW_TYPE_ENABLED = 100
+        const val VIEW_TYPE_DISABLED = 101
+
+        const val MAX_POOL_SIZE = 15
+    }
+}
